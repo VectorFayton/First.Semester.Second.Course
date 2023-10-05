@@ -8,13 +8,14 @@ import java.util.stream.Stream;
 public class SortComparison {
     public static void main(String[] args) {
         long start = System.nanoTime();
-//        int[] array = new int[100];
-//        Random random = new Random();
-//        IntStream.range(0, 100).forEach(index -> array[index] = random.nextInt(100));
-        int[] array = {10, 2, 10, 3, 1, 2, 5};
+        int[] array = new int[1000];
+        Random random = new Random();
+        IntStream.range(0, 1000).forEach(index -> array[index] = random.nextInt(1000));
         PrintArray(array);
-        BubbleSort(array);
+//        BubbleSort(array);
 //        OptimizedBubbleSort(array);
+        Arrays.sort(array);
+        PrintArray(array);
         long finish = System.nanoTime();
         long runtime = finish - start;
         System.out.println("Compiling for: " + runtime);
@@ -62,6 +63,9 @@ public class SortComparison {
                 }
 //                PrintArray(array);
             }
+            if (!condition){
+                break;
+            }
             for (int k = array.length - 1; k == 0; k--) {
                 if (array[k] > array[k - 1]) {
                     int value = array[k - 1];
@@ -70,6 +74,9 @@ public class SortComparison {
                     condition = true;
                 }
 //                PrintArray(array);
+            }
+            if (!condition){
+                break;
             }
         }
         PrintArray(array);
