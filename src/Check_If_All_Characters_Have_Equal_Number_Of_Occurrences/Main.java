@@ -46,6 +46,7 @@ class Solution {
         System.out.println(string_map);
         Set<Integer> unique_frequency = new HashSet<>(string_map.values());
         System.out.println(unique_frequency);
+        System.out.println(string_map.getOrDefault("y", 0));
 
         return unique_frequency.size() == 1;
     }
