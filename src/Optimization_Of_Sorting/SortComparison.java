@@ -7,11 +7,17 @@ import java.util.stream.Stream;
 
 public class SortComparison {
     public static void main(String[] args) {
-        int[] array = new int[5];
-        Random random = new Random();
-        IntStream.range(0, 5).forEach(index -> array[index] = random.nextInt(100));
+        long start = System.nanoTime();
+//        int[] array = new int[100];
+//        Random random = new Random();
+//        IntStream.range(0, 100).forEach(index -> array[index] = random.nextInt(100));
+        int[] array = {10, 2, 10, 3, 1, 2, 5};
         PrintArray(array);
-        OptimizedBubbleSort(array);
+        BubbleSort(array);
+//        OptimizedBubbleSort(array);
+        long finish = System.nanoTime();
+        long runtime = finish - start;
+        System.out.println("Compiling for: " + runtime);
     }
 
     public static void SelectionSort(int[] array){
@@ -54,7 +60,16 @@ public class SortComparison {
                     array[j] = value;
                     condition = true;
                 }
-                PrintArray(array);
+//                PrintArray(array);
+            }
+            for (int k = array.length - 1; k == 0; k--) {
+                if (array[k] > array[k - 1]) {
+                    int value = array[k - 1];
+                    array[k - 1] = array[k];
+                    array[k] = value;
+                    condition = true;
+                }
+//                PrintArray(array);
             }
         }
         PrintArray(array);
