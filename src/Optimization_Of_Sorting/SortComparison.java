@@ -1,32 +1,30 @@
 package Optimization_Of_Sorting;
 
-import jdk.jshell.EvalException;
-
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class SortComparison {
     public static void main(String[] args) {
         long start = System.nanoTime();
-        int[] array = new int[1000];
+        int[] array = new int[10];
         Random random = new Random();
-        IntStream.range(0, 1000).forEach(index -> array[index] = random.nextInt(1000));
+        IntStream.range(0, 10).forEach(index -> array[index] = random.nextInt(1000));
         PrintArray(array);
-//        BubbleSort(array);
-        OptimizedBubbleSort(array);
+        BubbleSort(array);
 //        SelectionSort(array);
+//        OptimizedBubbleSort(array);
 //        Arrays.sort(array);
 //        PrintArray(array);
-//        quickSort(array, 0, array.length - 1);
+//        QuickSort(array, 0, array.length - 1);
+//        PrintArray(array);
 //        Arrays.toString(array);
         long finish = System.nanoTime();
         long runtime = finish - start;
-        System.out.println("Compiling for: " + runtime);
+        System.out.println("Compiling for: " + runtime + " nanoSec");
     }
 
-    public static void SelectionSort(int[] array){
+    public static void OptimizedSelectionSort(int[] array){
         for(int i = 0; i < array.length; i++){
             int index = i;
             for (int j = i + 1; j < array.length; j++){
@@ -34,9 +32,7 @@ public class SortComparison {
                     index = j;
                 }
             }
-            int value = array[index];
-            array[index] = array[i];
-            array[i] = value;
+            Swap(array, index, i);
         }
         PrintArray(array);
     }
@@ -47,18 +43,12 @@ public class SortComparison {
             condition = false;
             for (int j = 1; j < array.length; j++) {
                 if (array[j] < array[j - 1]) {
-                    int value = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = value;
+                    Swap(array, j - 1, j);
                     condition = true;
                 }
             }
         }
         PrintArray(array);
-    }
-
-    public static void OptimizedSelectionSort(int[] array){
-
     }
 
     public static void OptimizedBubbleSort(int[] array){
@@ -67,9 +57,7 @@ public class SortComparison {
             condition = false;
             for (int j = 1; j < array.length; j++) {
                 if (array[j] < array[j - 1]) {
-                    int value = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = value;
+                    Swap(array, j - 1, j);
                     condition = true;
                 }
 //                PrintArray(array);
@@ -79,9 +67,7 @@ public class SortComparison {
             }
             for (int k = array.length - 1; k == 0; k--) {
                 if (array[k] > array[k - 1]) {
-                    int value = array[k - 1];
-                    array[k - 1] = array[k];
-                    array[k] = value;
+                    Swap(array, k - 1, k);
                     condition = true;
                 }
 //                PrintArray(array);
@@ -90,18 +76,17 @@ public class SortComparison {
         PrintArray(array);
     }
 
-    public static void quickSort(int[] array, int low, int high) {
+    public static void QuickSort(int[] array, int low, int high) {
         if (array.length == 0)
-            return;//завершить выполнение, если длина массива равна 0
+            return;
 
         if (low >= high)
-            return;//завершить выполнение если уже нечего делить
+            return;
 
-        // выбрать опорный элемент
+
         int middle = low + (high - low) / 2;
         int opora = array[middle];
 
-        // разделить на подмассивы, который больше и меньше опорного элемента
         int i = low, j = high;
         while (i <= j) {
             while (array[i] < opora) {
@@ -112,7 +97,7 @@ public class SortComparison {
                 j--;
             }
 
-            if (i <= j) {//меняем местами
+            if (i <= j) {
                 int temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
@@ -121,12 +106,11 @@ public class SortComparison {
             }
         }
 
-        // вызов рекурсии для сортировки левой и правой части
         if (low < j)
-            quickSort(array, low, j);
+            QuickSort(array, low, j);
 
         if (high > i)
-            quickSort(array, i, high);
+            QuickSort(array, i, high);
     }
     public static void PrintArray(int[] array){
         for (int values:array) {
@@ -134,4 +118,11 @@ public class SortComparison {
         }
         System.out.println();
     }
+
+    public static void Swap(int[] array, int index, int index_swapped){
+        int value = array[index];
+        array[index] = array[index_swapped];
+        array[index_swapped] = value;
+    }
 }
+// Вывод и анализ в дополнительных прикрепленный файлах
