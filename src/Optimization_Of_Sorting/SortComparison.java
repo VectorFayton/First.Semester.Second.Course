@@ -1,5 +1,7 @@
 package Optimization_Of_Sorting;
 
+import jdk.jshell.EvalException;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -13,10 +15,12 @@ public class SortComparison {
         IntStream.range(0, 1000).forEach(index -> array[index] = random.nextInt(1000));
         PrintArray(array);
 //        BubbleSort(array);
-//        OptimizedBubbleSort(array);
+        OptimizedBubbleSort(array);
+//        SelectionSort(array);
 //        Arrays.sort(array);
 //        PrintArray(array);
-        quickSort(array, 0, array.length - 1);
+//        quickSort(array, 0, array.length - 1);
+//        Arrays.toString(array);
         long finish = System.nanoTime();
         long runtime = finish - start;
         System.out.println("Compiling for: " + runtime);
@@ -24,11 +28,17 @@ public class SortComparison {
 
     public static void SelectionSort(int[] array){
         for(int i = 0; i < array.length; i++){
-            for (int j = 0; j < array.length; j++){
-
+            int index = i;
+            for (int j = i + 1; j < array.length; j++){
+                if (array[index] > array[j]){
+                    index = j;
+                }
             }
+            int value = array[index];
+            array[index] = array[i];
+            array[i] = value;
         }
-
+        PrintArray(array);
     }
 
     public static void BubbleSort(int[] array){
