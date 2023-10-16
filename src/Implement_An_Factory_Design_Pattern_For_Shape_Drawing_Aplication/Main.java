@@ -56,8 +56,20 @@ public class Main {
         Scanner Input = new Scanner(System.in);
         System.out.print("The shape you want to draw: ");
         String shape_type = Input.nextLine();
-        if (shape_type.equalsIgnoreCase("Circle")){
+        ShapeFactory shape_factory = null;
+        if (shape_type.equalsIgnoreCase("circle")){
+            shape_factory = new CreateCircle();
+        } else if (shape_type.equalsIgnoreCase("square")) {
+            shape_factory = new CreateSquare();
+        } else if (shape_type.equalsIgnoreCase("triangle")) {
+            shape_factory = new CreateTriangle();
+        } else {
+            System.out.println("Something wrong...");
+        }
 
+        if (shape_type != null){
+            Shape shape = shape_factory.CreateShape();
+            shape.Draw();
         }
     }
 }
