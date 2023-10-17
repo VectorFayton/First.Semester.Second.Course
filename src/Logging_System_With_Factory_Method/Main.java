@@ -1,6 +1,7 @@
 package Logging_System_With_Factory_Method;
 
 import java.util.Scanner;
+import java.sql.*;
 
 abstract class Logger {
     abstract void Log(String message);
@@ -23,6 +24,21 @@ class FileLogger extends Logger{
 class DatabaseLogger extends Logger{
     @Override
     void Log(String message) {
+        String url_sql = "";
+        String username = "";
+        String password = "";
+        try {
+            Connection connection = DriverManager.getConnection(url_sql, username, password);
+            if (connection != null){
+                System.out.println("Connected to database");
+                connection.close();
+                System.out.println("Connection closed");
+            } else {
+                System.out.println("Connection failed...");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         System.out.printf("Added to the database: %s \n", message);
     }
 }
@@ -61,11 +77,11 @@ public class Main {
         Input.nextLine();
         System.out.print("Message: ");
         String message = Input.nextLine();
-        if (logger_type.contains("Console")){
+        if (logger_type.equalsIgnoreCase("console")){
             logger_factory = new ConsoleLoggerFactory();
-        } else if (logger_type.contains("File")) {
+        } else if (logger_type.equalsIgnoreCase("file")) {
             logger_factory = new FileLoggerFactory();
-        } else if (logger_type.contains("Database")) {
+        } else if (logger_type.equalsIgnoreCase("database")) {
             logger_factory = new DatabaseLoggerFactory();
         } else {
             System.out.println("Invalid logger type");
